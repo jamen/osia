@@ -3,6 +3,8 @@
 
 _Another task manager?_ Yes.  This one works through `Promise` objects, however.  It also aims to be more lightweight, with just as robust features (if not more) than other task managers.
 
+This project is in very early stages, and there is a lot of missing functionality that would otherwise be wanted.  If you have an idea, create an issue, then a pull request if you can.
+
 ## Installation
 ```shell
 $ npm install osia
