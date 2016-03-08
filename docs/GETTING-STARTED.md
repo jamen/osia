@@ -80,7 +80,7 @@ $ osia foo --bar, baz --qux
 
 Arguments are the same as options, except they are primitive values and only in a list...  For instance:
 ```
-$ osia -i foo "Hello"
+$ osia -i foo "Hello" --bar
 ```
 
 We can handle this in the task:
