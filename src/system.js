@@ -10,9 +10,16 @@ class System {
   }
 
   /** Create a task. */
-  task(name, fn) {
-    const path = name.split(':');
-    const prop = path.splice(-1, 1)[0];
+  task(...args) {
+    let path = null;
+    let deps = null;
+    let fn = function fn() {};
+
+    if (args.length === 2) [path, fn] = args;
+    else if (args.length === 3) [path, deps, fn] = args;
+
+    path = path.split(':');
+    const name = path[0];
     let sel = this.tasks;
 
     for (const item of path) {
@@ -20,23 +27,19 @@ class System {
       sel = sel[item];
     }
 
-    sel[prop] = new Task(name, fn);
+    sel[name] = new Task(name, fn, deps);
     return fn;
   }
 
   /** Run a task. */
   run(path = 'default', opts, args) {
-    const parts = path.split(':');
-    const name = parts.splice(-1, 1)[0];
-    let sel = this.tasks;
-
-    for (const item of parts) {
-      sel = sel[item];
-    }
-
-    const task = sel[name];
-
-    return task.start(opts, args, { at: process.hrtime(this._startTime)[1] });
+    const task = this._nameToTask(path);
+    const meta = {
+      at: process.hrtime(this._startTime)[1],
+    };
+    return Promise.all(
+      (task.deps || []).map(dep => this._nameToTask(dep).start(opts, args, meta))
+    ).then(() => task.start(opts, args, meta));
   }
 
   /** Log */
@@ -53,6 +56,19 @@ class System {
   /** Open file(s), starting a Promise chain. */
   open(files) {
     return read(files);
+  }
+
+  _nameToTask(path) {
+    const parts = path.split(':');
+    const name = parts[0];
+    let sel = this.tasks;
+
+    for (const item of parts) {
+      sel = sel[item];
+    }
+
+    // task
+    return sel[name];
   }
 }
 

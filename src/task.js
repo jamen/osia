@@ -1,9 +1,10 @@
 import { blue, green, red } from 'chalk';
 
 class Task {
-  constructor(name, fn) {
+  constructor(name, fn, deps) {
     this.process = null;
     this.name = name;
+    this.deps = deps;
     this.fn = fn;
   }
 
