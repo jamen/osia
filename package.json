@@ -34,6 +34,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "cli-list": "^0.1.6",
+    "minimist": "^1.2.0",
     "promise-routine": "^0.2.0",
     "vinyl-read": "^1.0.0"
   }
