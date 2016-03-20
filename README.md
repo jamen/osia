@@ -1,30 +1,40 @@
 # Osia
 > An elegant Promise-based tasking system.
 
-_Another task manager?_ Yes.  This one works through `Promise` objects, however.  It also aims to be more lightweight, with just as robust features (if not more) than other task managers.
-
-This project is in very early stages, and there is a lot of missing functionality that would otherwise be wanted.  If you have an idea, create an issue, then a pull request if you can.
+Another task manager that is designed around `Promise` objects and aims to keep dependencies small, while still offering a powerful API to get work done.  It is inspired from Gulp, and even uses [vinyl files][vinyl] internally.
 
 ## Installation
+**One time** CLI install:
 ```shell
-$ npm install osia
+$ npm install -g osia
+```
+
+**Per-project** library install:
+```shell
+$ npm install --save-dev osia
 ```
 
 ## Usage
+Import the library:
 ```javascript
 import osia from 'osia';
 ```
+
+Basic CLI usage:
 ```
 $ osia [...tasks]
 ```
 
-## Documentation
-See the [docs] folder for more information on how to use Osia.
+See the [docs](docs) folder for more information on how to use Osia.
 
 ## Credits
 | ![jamen][avatar] |
 |:---:|
 | [Jamen Marzonie][github] |
 
-  [avatar]: https://avatars.githubusercontent.com/u/6251703?v=3&s=125
-  [github]: https://github.com/jamen
+## License
+MIT &copy; [Jamen Marzonie][github]
+
+[avatar]: https://avatars.githubusercontent.com/u/6251703?v=3&s=125
+[github]: https://github.com/jamen
+[vinyl]: https://github.com/gulpjs/vinyl
