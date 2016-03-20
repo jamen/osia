@@ -1,8 +1,9 @@
 import read from 'vinyl-read';
 import Task from './task';
-import p from 'path';
+import path from 'path';
 import plugin from './plugin';
 import fs from 'fs';
+import routine from 'promise-routine';
 
 class System {
   constructor(tasks = {}, plugins = {}, name = 'osia') {
@@ -14,29 +15,33 @@ class System {
 
   /** Create a task. */
   task(...args) {
-    let path = null;
+    let route = null;
     let deps = null;
     let fn = function fn() {};
 
-    if (args.length === 2) [path, fn] = args;
-    else if (args.length === 3) [path, deps, fn] = args;
+    if (args.length === 2) [route, fn] = args;
+    else if (args.length === 3) [route, deps, fn] = args;
 
-    path = path.split(':');
-    const name = path[0];
+    const parts = route.split(':');
+    const name = parts.splice(-1, 1);
     let sel = this.tasks;
 
-    for (const item of path) {
-      sel[item] = {};
+    for (const item of parts) {
+      if (typeof sel[item] === 'undefined') sel[item] = {};
       sel = sel[item];
     }
 
+    // task
     sel[name] = new Task(name, fn, deps);
-    return fn;
   }
 
   /** Run a task. */
-  run(path = 'default', opts, args) {
-    const task = this._nameToTask(path);
+  run(route = 'default', opts, args) {
+    const task = this._nameToTask(route);
+    console.log(task);
+    if (!(task instanceof Task)) {
+      return routine(t => this.run(`${route}:${t}`), ...Object.keys(task));
+    }
     const meta = {
       at: process.hrtime(this._startTime)[1],
     };
@@ -63,16 +68,16 @@ class System {
 
   save(base) {
     return plugin((file, resolve, reject) => {
-      file.base = p.resolve(base);
+      file.base = path.resolve(base);
       fs.writeFile(file.path, file.contents,
         (err) => (err ? reject(err) : resolve(file))
       );
     });
   }
 
-  _nameToTask(path) {
-    const parts = path.split(':');
-    const name = parts[0];
+  _nameToTask(route) {
+    const parts = route.split(':');
+    const name = parts.splice(-1, 1);
     let sel = this.tasks;
 
     for (const item of parts) {
