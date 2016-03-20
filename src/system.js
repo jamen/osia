@@ -34,7 +34,6 @@ class System {
 
   run(route = 'default', opts, args) {
     const task = this._nameToTask(route);
-    console.log(task);
     if (!(task instanceof Task)) {
       return routine(t => this.run(`${route}:${t}`), ...Object.keys(task));
     }
@@ -61,7 +60,7 @@ class System {
 
   save(base) {
     return plugin((file, resolve, reject) => {
-      file.base = path.resolve(base);
+      file.dirname = path.resolve(base);
       fs.writeFile(file.path, file.contents,
         (err) => (err ? reject(err) : resolve(file))
       );
