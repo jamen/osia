@@ -38,8 +38,8 @@ But first, we need to create an `osia.js` file, this is the configuration file f
 ```javascript
 osia.task('foo', () =>
   osia.open('foo.js')
-  .then(function(file) {
-    console.log(file.contents.toString());
+  .then(function(files) {
+    console.log(files[0].contents.toString());
   })
 );
 ```
@@ -59,9 +59,9 @@ A slightly more unique feature to Osia is its dynamic runtime capabilities, put 
 ```javascript
 osia.task('foo', opts =>
   osia.open('foo.js')
-  .then(function(file) {
+  .then(function(files) {
     if (opts.bar) {
-      console.log(file.contents.toString());
+      console.log(files[0].contents.toString());
     }
   })
 );
@@ -87,9 +87,9 @@ We can handle this in the task:
 ```javascript
 osia.task('foo', (opts, args) =>
   osia.open('foo.js')
-  .then(function(file) {
+  .then(function(files) {
     if (opts.bar) {
-      console.log(file.contents.toString(), args[0]);
+      console.log(files[0].contents.toString(), args[0]);
     }
   })
 );
