@@ -1,5 +1,8 @@
 import read from 'vinyl-read';
 import Task from './task';
+import p from 'path';
+import plugin from './plugin';
+import fs from 'fs';
 
 class System {
   constructor(tasks = {}, plugins = {}, name = 'osia') {
@@ -56,6 +59,16 @@ class System {
   /** Open file(s), starting a Promise chain. */
   open(files) {
     return read(files);
+  }
+
+  save(base) {
+    return plugin((file, resolve, reject) => {
+      file.base = p.resolve(base);
+      console.log(`write to ${file.path}`);
+      fs.writeFile(file.path, file.contents,
+        (err) => (err ? reject(err) : resolve(file))
+      );
+    });
   }
 
   _nameToTask(path) {
