@@ -8,7 +8,7 @@ class Task {
     this.fn = fn;
   }
 
-  /** Start the task. */
+  // Start the task.
   start(opts = {}, args = [], meta = {}) {
     this.log(`starting ${meta.at && `(at ${meta.at / 1000000}ms`})`);
     const timer = process.hrtime();
@@ -28,12 +28,12 @@ class Task {
     });
   }
 
-  /** Log */
+  // Log
   log(message) {
     console.log(`${blue(`[${this.name}]`)} ${green(message)}`);
   }
 
-  /** Trigger a plugin error. */
+  // Trigger a plugin error.
   error(err) {
     console.log(`${blue(`[${this.name}]`)} ${red(err.name) + green(':')} ${red(err.message)}`);
     throw err;

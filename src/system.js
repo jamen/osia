@@ -5,14 +5,13 @@ import plugin from './plugin';
 import fs from 'fs';
 
 class System {
-  constructor(tasks = {}, plugins = {}, name = 'osia') {
+  constructor(tasks = {}, name = 'osia') {
     this.tasks = tasks;
-    this.plugins = plugins;
     this.name = name;
     this._startTime = process.hrtime();
   }
 
-  /** Create a task. */
+  // Create a task.
   task(...args) {
     let path = null;
     let deps = null;
@@ -34,7 +33,7 @@ class System {
     return fn;
   }
 
-  /** Run a task. */
+  // Run a task.
   run(path = 'default', opts, args) {
     const task = this._nameToTask(path);
     const meta = {
@@ -45,18 +44,18 @@ class System {
     ).then(() => task.start(opts, args, meta));
   }
 
-  /** Log */
+  // Log
   log(message) {
     console.log(`[${this.name}] ${message}`);
   }
 
-  /** System error */
+  // System error
   error(message) {
     console.log(`[${this.name}] ${message}`);
     throw new Error(message, this.name);
   }
 
-  /** Open file(s), starting a Promise chain. */
+  // Open file(s), starting a Promise chain.
   open(files) {
     return read(files);
   }
