@@ -1,7 +1,7 @@
 {
   "name": "osia",
   "author": "Jamen Marzonie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An elegant Promise-based tasking system.",
   "main": "lib",
   "bin": "lib/cli.js",
