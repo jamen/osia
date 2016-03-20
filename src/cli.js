@@ -10,7 +10,6 @@ const opts = minimist(args, { boolean: true });
 const sets = list(opts._);
 const tasks = [];
 
-// Setup CLI for routine
 if (sets.length > 1 || opts.i) {
   sets.forEach(set => {
     const mic = minimist(set);
@@ -24,8 +23,6 @@ if (opts.b || opts.babel) {
   require(require.resolve('babel-register'));
 }
 
-// Run the config, which defines the tasks.
 require(join(process.cwd(), 'osia.js'));
 
-// Start
 routine((...o) => osia.run(...o), ...tasks);

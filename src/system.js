@@ -6,14 +6,12 @@ import fs from 'fs';
 import routine from 'promise-routine';
 
 class System {
-  constructor(tasks = {}, plugins = {}, name = 'osia') {
+  constructor(tasks = {}, name = 'osia') {
     this.tasks = tasks;
-    this.plugins = plugins;
     this.name = name;
     this._startTime = process.hrtime();
   }
 
-  /** Create a task. */
   task(...args) {
     let route = null;
     let deps = null;
@@ -31,11 +29,9 @@ class System {
       sel = sel[item];
     }
 
-    // task
     sel[name] = new Task(name, fn, deps);
   }
 
-  /** Run a task. */
   run(route = 'default', opts, args) {
     const task = this._nameToTask(route);
     console.log(task);
@@ -50,18 +46,15 @@ class System {
     ).then(() => task.start(opts, args, meta));
   }
 
-  /** Log */
   log(message) {
     console.log(`[${this.name}] ${message}`);
   }
 
-  /** System error */
   error(message) {
     console.log(`[${this.name}] ${message}`);
     throw new Error(message, this.name);
   }
 
-  /** Open file(s), starting a Promise chain. */
   open(files) {
     return read(files);
   }
@@ -84,7 +77,6 @@ class System {
       sel = sel[item];
     }
 
-    // task
     return sel[name];
   }
 }
