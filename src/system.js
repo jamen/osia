@@ -64,7 +64,6 @@ class System {
   save(base) {
     return plugin((file, resolve, reject) => {
       file.base = p.resolve(base);
-      console.log(`write to ${file.path}`);
       fs.writeFile(file.path, file.contents,
         (err) => (err ? reject(err) : resolve(file))
       );
