@@ -24,9 +24,4 @@ if (sets.length > 1 || opts.i) {
 require(join(process.cwd(), 'osia.js'));
 
 // Start
-const timer = process.hrtime();
-osia.log('starting');
-routine((...o) => osia.run(...o), ...tasks).then(() => {
-  const [seconds] = process.hrtime(timer);
-  osia.log(`finished in ${seconds}s`);
-}, (a) => osia.error(a));
+routine((...o) => osia.run(...o), ...tasks);

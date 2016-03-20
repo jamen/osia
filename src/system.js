@@ -6,6 +6,7 @@ class System {
     this.tasks = tasks;
     this.plugins = plugins;
     this.name = name;
+    this._startTime = process.hrtime();
   }
 
   /** Create a task. */
@@ -35,13 +36,7 @@ class System {
 
     const task = sel[name];
 
-    task.log('starting');
-    const timer = process.hrtime();
-    return task.start(opts, args).then(data => {
-      const [seconds] = process.hrtime(timer);
-      task.log(`finished in ${seconds}s`);
-      return data;
-    }, (err) => console.log(err));
+    return task.start(opts, args, { at: process.hrtime(this._startTime)[1] });
   }
 
   /** Log */
