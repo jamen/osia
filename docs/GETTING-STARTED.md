@@ -95,3 +95,7 @@ osia.task('foo', (opts, args) =>
 );
 ```
 Subsequently logging the contents of `foo.js` with `"Hello"`.
+
+## Related
+ - [CLI](CLI.md)
+ - [`osia`](api/osia.md)
