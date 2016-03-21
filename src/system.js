@@ -22,12 +22,7 @@ class System {
 
     const parts = route.split(':');
     const name = parts.splice(-1, 1);
-    let sel = this.tasks;
-
-    for (const item of parts) {
-      if (typeof sel[item] === 'undefined') sel[item] = {};
-      sel = sel[item];
-    }
+    const sel = this.tasks;
 
     sel[name] = new Task(name, fn, deps);
   }
@@ -40,9 +35,7 @@ class System {
     const meta = {
       at: process.hrtime(this._startTime)[1],
     };
-    return Promise.all(
-      (task.deps || []).map(dep => this._nameToTask(dep).start(opts, args, meta))
-    ).then(() => task.start(opts, args, meta));
+    return task.start(opts, args, meta);
   }
 
   log(message) {
