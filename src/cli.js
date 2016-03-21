@@ -27,6 +27,17 @@ if (opts.v || opts.version) {
   osia.log(`CLI Version v${require('../package.json').version}`);
 }
 
+if (opts.h || opts.help) {
+  console.log(`
+  Usage:
+    osia [...tasks]
+  Options:
+    -h --help     Show this message
+    -v --version  Show version
+    -b --babel    Add babel support
+  `);
+}
+
 require(join(process.cwd(), 'osia.js'));
 
 routine((...o) => osia.run(...o), ...tasks);
