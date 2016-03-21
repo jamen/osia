@@ -23,6 +23,10 @@ if (opts.b || opts.babel) {
   require(require.resolve('babel-register'));
 }
 
+if (opts.v || opts.version) {
+  osia.log(`CLI Version v${require('../package.json').version}`);
+}
+
 require(join(process.cwd(), 'osia.js'));
 
 routine((...o) => osia.run(...o), ...tasks);
