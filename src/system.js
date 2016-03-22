@@ -23,10 +23,7 @@ class System {
   }
 
   run(route = 'default', opts, args) {
-    const meta = {
-      at: process.hrtime(this._startTime)[1],
-    };
-    return this.tasks[Object.keys(this.tasks)[0]].start(opts, args, meta);
+    this.tasks[route].start(opts, args);
   }
 
   log(message) {

@@ -8,7 +8,10 @@ class Task {
     this.fn = fn;
   }
 
-  start(opts = {}, args = [], meta = {}) {
+  start(opts = {}, args = []) {
+    const meta = {
+      at: process.hrtime(this._startTime)[1],
+    };
     this.log(`starting ${meta.at && `(at ${meta.at / 1000000}ms`})`);
     const timer = process.hrtime();
 
