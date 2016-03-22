@@ -6,7 +6,21 @@ import routine from 'promise-routine';
 import { join } from 'path';
 
 const args = process.argv.slice(2);
-const opts = minimist(args, { boolean: true });
+const opts = minimist(args, {
+  boolean: true,
+  default: {
+    version: false,
+    babel: false,
+    help: false,
+    color: true,
+  },
+  alias: {
+    version: 'v',
+    babel: 'b',
+    help: 'h',
+    color: 'c',
+  },
+});
 const sets = list(opts._);
 const tasks = [];
 
@@ -19,15 +33,15 @@ if (sets.length > 1 || opts.i) {
   sets[0].forEach(task => tasks.push([task, {}, {}]));
 }
 
-if (opts.b || opts.babel) {
+if (opts.babel) {
   require(require.resolve('babel-register'));
 }
 
-if (opts.v || opts.version) {
+if (opts.version) {
   osia.log(`CLI Version v${require('../package.json').version}`);
 }
 
-if (opts.h || opts.help) {
+if (opts.help) {
   console.log(`
   Usage:
     osia [...tasks]
@@ -37,6 +51,8 @@ if (opts.h || opts.help) {
     -b --babel    Add babel support
   `);
 }
+
+osia.meta.color = opts.color;
 
 require(join(process.cwd(), 'osia.js'));
 
