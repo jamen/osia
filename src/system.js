@@ -5,10 +5,12 @@ import plugin from './plugin';
 import fs from 'fs';
 
 class System {
-  constructor(tasks = {}, name = 'osia') {
+  constructor(tasks = {}, name = 'osia', meta = {}) {
     this.tasks = tasks;
     this.name = name;
-    this._startTime = process.hrtime();
+    this.meta = meta;
+
+    this.meta.startTime = process.hrtime();
   }
 
   task(...args) {
@@ -19,7 +21,11 @@ class System {
     if (args.length === 2) [route, fn] = args;
     else if (args.length === 3) [route, deps, fn] = args;
 
-    this.tasks[route] = new Task(route, fn, deps);
+    this.tasks[route] = new Task(route, fn, {
+      color: this.meta.color,
+      systemStartTime: this.meta.startTime,
+      deps,
+    });
   }
 
   run(route = 'default', opts, args) {

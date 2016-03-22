@@ -1,18 +1,17 @@
 import { blue, green, red } from 'chalk';
 
 class Task {
-  constructor(name, fn, deps) {
+  constructor(name, fn, meta = {}) {
     this.process = null;
     this.name = name;
-    this.deps = deps;
+    this.meta = meta;
+    this.deps = meta.deps;
     this.fn = fn;
   }
 
   start(opts = {}, args = []) {
-    const meta = {
-      at: process.hrtime(this._startTime)[1],
-    };
-    this.log(`starting ${meta.at && `(at ${meta.at / 1000000}ms`})`);
+    const at = process.hrtime(this._systemStartTime)[1];
+    this.log(`starting ${at && `(at ${at / 1000000}ms`})`);
     const timer = process.hrtime();
 
     this.process = Promise.resolve({ opts, args })
