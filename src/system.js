@@ -23,7 +23,7 @@ class System {
   }
 
   run(route = 'default', opts, args) {
-    this.tasks[route].start(opts, args);
+    return this.tasks[route].start(opts, args);
   }
 
   log(message) {
