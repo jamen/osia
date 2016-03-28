@@ -1,5 +1,5 @@
 # Writing Plugins
-Osia has a small utility to make common plugin writing a better experience, called `osia.plugin`.  It is a function on the main module.
+Osia has a small utility to make common plugin writing a better experience, called [`osia-plugin`](https://github.com/seanc/osia-plugin).  It is a function on the main module.
 
 This function prepares a file-routine for you, and provides some more flexible syntax...
 
