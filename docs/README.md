@@ -1,7 +1,7 @@
 # Osia
 Osia is a task manager based on top of `Promise` objects, and aims to be (fairly) minimalistic.
 
- - [Getting Started][getting-started.md]
+ - [Getting Started](getting-started.md)
  - [Using Plugins](using-plugins.md)
  - [Writing Plugins](writing-plugins.md)
 
