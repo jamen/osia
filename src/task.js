@@ -1,38 +1,29 @@
-import { blue, green, red } from 'chalk';
+import timer from './timer';
 
 class Task {
-  constructor(name, fn, meta = {}) {
+  constructor(fn, meta = { name: '', deps: [] }) {
     this.process = null;
-    this.name = name;
     this.meta = meta;
-    this.deps = meta.deps;
     this.fn = fn;
+    this.state = 'off';
   }
 
-  start(opts = {}, args = []) {
-    const at = process.hrtime(this._systemStartTime)[1];
-    this.log(`starting ${at && `(at ${at / 1000000}ms`})`);
-    const timer = process.hrtime();
+  start() {
+    // Setup state and timer.
+    this.state = 'running';
+    const results = timer(this);
 
-    this.process = Promise.resolve({ opts, args })
-    .then(({ o, a }) => this.fn(o, a, this));
+    // Create process, with non-Promise safeguard and error handling.
+    this.process = this.fn(this);
+    if (!(this.process instanceof Promise)) this.process = new Promise(r => r(this.process));
+    this.process.catch(console.error);
 
-    this.process.catch(this.error);
-
+    // Update state and print time.
     return this.process.then(data => {
-      const [, nano] = process.hrtime(timer);
-      this.log(`finished in ${nano / 1000000}ms`);
+      results();
+      this.state = 'ran';
       return data;
     });
-  }
-
-  log(message) {
-    console.log(`${blue(`[${this.name}]`)} ${green(message)}`);
-  }
-
-  error(err) {
-    console.log(`${blue(`[${this.name}]`)} ${red(err.name) + green(':')} ${red(err.message)}`);
-    throw err;
   }
 }
 
