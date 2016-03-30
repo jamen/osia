@@ -1,4 +1,5 @@
-import read from 'vinyl-read';
+import { read } from 'vinyl-file';
+import glob from 'glob-promise';
 import write from 'vinyl-write';
 import Task from './task';
 import path from 'path';
@@ -51,9 +52,9 @@ class System {
     });
   }
 
-  open(files) {
+  open(globs) {
     // Read file, creating promise pipeline
-    return read(files);
+    return routine(glob, ...globs).then(files => routine(read, ...files));
   }
 
   save(base) {

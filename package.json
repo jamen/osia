@@ -32,12 +32,13 @@
     "gulp-eslint": "^2.0.0"
   },
   "dependencies": {
-    "chalk": "^1.1.1",
+    "glob-promise": "^1.0.6",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^1.0.4",
     "promise-routine": "^0.2.0",
-    "vinyl-read": "^1.0.0",
-    "vinyl-write": "^0.1.1"
+    "vinyl-file": "^2.0.0",
+    "vinyl-write": "^0.1.1",
+    "watch": "^0.17.1"
   }
 }
