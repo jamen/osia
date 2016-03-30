@@ -1,22 +1,16 @@
-# `Task(name, fn, deps)`
-A `Task` is like a triggerable named `Promise`.  It holds the function necessary, and can be started at will.
- - `name` (String): Name of task.
- - `fn`: (Function): Task function.
- - `deps` (Array): Task dependency names.
+## `new Task(fn, [meta])`
+A task holds a process, and can be started on command.
+ - `fn` (`function`): The task's process.
+ - `meta` (`Object`): Metadata information about the task.
+ - `meta.name` (`String`): Name of the task
+ - `meta.deps` (`Array`): Dependencies of the task.
 
-### `Task#start(options = {}, arguments = [], meta = {})`
-Start the task.
- - `options` (Object): Options to be passed into task function.
- - `arguments` (Array): Arguments to be passed into task function.
- - `meta` (Object): Meta info about task run.
+### `Task#start()`
+Start the task process.
 
-#### `meta.at`
-An integer of the amount of nanoseconds the system has been running when task is started.
+Returns `Promise`.
 
-### `Task#log(message)`
-Log information under the task's name.
- - `message` (String): Message to log.
-
-### `Task#error(err)`
-Error under the task.
- - `err` (Error): Error to be logged.
+## Instance data
+ - `task.fn (`function`)`: The _queued_ process
+ - `task.process` (`Promise`): The current process (returned by `Task#start`)
+ - `task.state` (`String`): The state of the task, either `'off'`, `'running'`, or `'ran'`.
