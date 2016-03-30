@@ -4,6 +4,7 @@ import Task from './task';
 import path from 'path';
 import routine from 'promise-routine';
 import timer from './timer';
+import mkdirp from 'mkdirp-promise';
 import m from './message';
 
 class System {
@@ -59,7 +60,7 @@ class System {
     // Create file-routine to change directory and write.
     return files => routine(file => {
       file.dirname = path.resolve(base);
-      return write(file);
+      return mkdirp(file.dirname).then(() => write(file));
     }, ...files);
   }
 
@@ -71,7 +72,7 @@ class System {
 
     // Make sure task is valid
     if (typeof task === 'undefined') {
-      console.log(m(`${this.meta.name}`, `Task '${taskName}' not found!`));
+      console.log(m(this.meta.name, `Task '${taskName}' not found!`));
       return Promise.resolve({ name: taskName, message: 'not found' });
     }
 
