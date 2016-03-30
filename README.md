@@ -32,6 +32,9 @@ See the [docs](docs) folder for more information on how to use Osia.
 |:---:|
 | [Jamen Marzonie][github] |
 
+## Pronunciation
+"Osia" is pronounced however you feel; however, I initially created it pronouncing it "Oh-sigh-uh".
+
 ## License
 MIT &copy; [Jamen Marzonie][github]
 
