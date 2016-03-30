@@ -1,33 +1,21 @@
-# `System(tasks = {}, name = 'osia')`
-The `System` class organizes tasks, and allows you do to things like grouping.
- - `tasks` (Object): Preset tasks.
- - `name` (String): Name of the system.
+## `new System(tasks, [meta])`
+A system manages and controls [`Task`](Task.md) objects.
+ - `tasks` (`Object`): An object of tasks (where the keys are names).
+ - `meta` (`Object`): Metadata information about the system.
 
-### `System#task(name, fn)`
-### `System#task(name, deps, fn)`
-Define a [`Task`][task] in the system.
- - `name` (String): Name/route of task.
- - `deps` (Array): Dependency tasks (run after). Optional
- - `fn` (Function): The callback to execute the task.
+### `System#task(name, [deps], fn)`
+### `System#task(name, tasks)`
+Define a new task inside the system.
+ - `name` (`String`): Name of the task.
+ - `deps` (`Array`): An array of dependency tasks to await on before starting.
+ - `fn` (`function`): The task function.
 
-#### `fn(options, arguments)`
-The callback of a task.
- - `options` (Object): Objects passed into task.
- - `arguments` (Array): Arguments passed into task.
+### `System#start(tasks)`
+Start a task defined in the system
+ - `tasks` (`String`, `Array`): Name or names of tasks to start.
 
-### `System#run(name, options, arguments)`
-Run a task (or group) defined in the system.
- - `name` (String): Name/route of task or group.
- - `options` (Object): Options for task.
- - `arguments` (Array): Arguments for task.
+Returns `Promise`.
 
-### `System#open(path)`
-Open a file into a [vinyl file][vinyl], starting a `Promise` pipeline.
- - `path` (String|Array): String file path or glob, or array of strings.
-
-### `System#save(directory)`
-Save a pipeline of [vinyl files][vinyl] as files into `directory`.
- - `directory` (String): String path of directory to put files.
-
-[task]: Task.md
-[vinyl]: https://github.com/gulpjs/vinyl
+### `System#name(name)`
+Give the system a new name.
+ - `name` (`String`): Name to give to the system.
