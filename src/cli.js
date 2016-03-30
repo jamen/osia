@@ -28,18 +28,24 @@ if (!tasks.length) tasks.push('default');
 if (opts.babel) require(require.resolve('babel-register'));
 
 // Show version
-if (opts.version) osia.log(`CLI Version v${require('../package.json').version}`);
+if (opts.version) {
+  console.log(`v${require('../package.json').version}`);
+  process.exit(0);
+}
 
 // Help page
 if (opts.help) {
   console.log(`
   Usage:
     osia [...tasks]
+
   Options:
-    -h --help     Show this message
-    -v --version  Show version
-    -b --babel    Add babel support
+    --help, -h     Show this page.
+    --version, -v  Show Osia version.
+    --babel, -b    Use babel-register in task file.
+    --no-color     Disable colorful logging
   `);
+  process.exit(0);
 }
 
 // Propagate color on/off in system.
