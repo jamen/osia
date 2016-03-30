@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 import osia from '.';
 import minimist from 'minimist';
-import list from 'cli-list';
-import routine from 'promise-routine';
 import { join } from 'path';
 
-const args = process.argv.slice(2);
-const opts = minimist(args, {
+// Create CLI
+const opts = minimist(process.argv.slice(2), {
   boolean: true,
   default: {
     version: false,
@@ -21,26 +19,18 @@ const opts = minimist(args, {
     color: 'c',
   },
 });
-const sets = list(opts._);
-const tasks = [];
 
-if (sets.length > 1 || opts.i) {
-  sets.forEach(set => {
-    const mic = minimist(set);
-    tasks.push([set[0], mic, mic._.slice(1)]);
-  });
-} else {
-  sets[0].forEach(task => tasks.push([task, {}, {}]));
-}
+// Tasks, use "default" if none.
+const tasks = opts._;
+if (!tasks.length) tasks.push('default');
 
-if (opts.babel) {
-  require(require.resolve('babel-register'));
-}
+// Enable babel
+if (opts.babel) require(require.resolve('babel-register'));
 
-if (opts.version) {
-  osia.log(`CLI Version v${require('../package.json').version}`);
-}
+// Show version
+if (opts.version) osia.log(`CLI Version v${require('../package.json').version}`);
 
+// Help page
 if (opts.help) {
   console.log(`
   Usage:
@@ -52,8 +42,9 @@ if (opts.help) {
   `);
 }
 
+// Propagate color on/off in system.
 osia.meta.color = opts.color;
 
+// Start Osia
 require(join(process.cwd(), 'osia.js'));
-
-routine((...o) => osia.run(...o), ...tasks);
+osia.start(tasks);
