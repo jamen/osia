@@ -10,7 +10,7 @@
     "url": "https://github.com/jamen/osia"
   },
   "scripts": {
-    "test": "ava test"
+    "test": "eslint src lib; ava test"
   },
   "private": false,
   "files": [
@@ -23,11 +23,12 @@
     "eslint-config-airbnb": "^6.0.2"
   },
   "dependencies": {
+    "chokidar": "^1.4.3",
     "glob-promise": "^1.0.6",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^1.0.4",
-    "promise-routine": "^0.2.0",
+    "promise-routine": "^1.0.0",
     "vinyl-file": "^2.0.0",
     "vinyl-write": "^0.1.1",
     "watch": "^0.17.1"
