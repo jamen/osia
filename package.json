@@ -10,9 +10,7 @@
     "url": "https://github.com/jamen/osia"
   },
   "scripts": {
-    "test": "gulp; ava test",
-    "build": "gulp",
-    "prepublish": "gulp"
+    "test": "ava test"
   },
   "private": false,
   "files": [
