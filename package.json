@@ -31,5 +31,8 @@
     "vinyl-file": "^2.0.0",
     "vinyl-write": "^0.1.1",
     "watch": "^0.17.1"
+  },
+  "engines": {
+    "node": ">=4.4.2"
   }
 }
