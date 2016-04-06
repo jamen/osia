@@ -15,9 +15,9 @@ $ npm install --save-dev osia
 ```
 
 ## Usage
-Import the library:
+const the library:
 ```javascript
-import osia from 'osia';
+const osia = require('osia';
 ```
 
 Basic CLI usage:
